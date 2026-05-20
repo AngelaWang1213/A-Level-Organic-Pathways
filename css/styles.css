@@ -320,7 +320,8 @@ body {
   min-height: 0;
   overflow: hidden;
   contain: layout paint;
-  overscroll-behavior: contain;
+  overscroll-behavior: none;
+  touch-action: none;
   isolation: isolate;
   z-index: 1;
 }

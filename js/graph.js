@@ -74,24 +74,78 @@ const HIDDEN_LABEL_FONT = {
   face: "Courier New",
 };
 
-/** Zoom limits relative to last “Fit map” scale (prevents map shrinking to a dot). */
+/** Zoom/pan limits — tighter on touch devices so the map cannot disappear. */
 export const ZOOM_LIMITS = {
-  minRatioOfFit: 0.5,
-  maxRatioOfFit: 2.5,
-  absoluteMin: 0.12,
-  absoluteMax: 3,
+  desktop: {
+    minRatioOfFit: 0.55,
+    maxRatioOfFit: 2.2,
+    absoluteMin: 0.15,
+    absoluteMax: 2.5,
+    panSlackRatio: 0.22,
+  },
+  mobile: {
+    minRatioOfFit: 0.78,
+    maxRatioOfFit: 1.75,
+    absoluteMin: 0.22,
+    absoluteMax: 1.9,
+    panSlackRatio: 0.12,
+  },
 };
+
+function activeZoomLimits() {
+  const mobile = window.matchMedia(
+    "(max-width: 768px), (hover: none) and (pointer: coarse)"
+  ).matches;
+  return mobile ? ZOOM_LIMITS.mobile : ZOOM_LIMITS.desktop;
+}
 
 export function getNodeBoxSpec(showStructureImages) {
   return showStructureImages ? NODE_BOX_AROMATIC : NODE_BOX_ALIPHATIC;
 }
 
+function getCanvasSize(network) {
+  const center = network.body?.dom?.center;
+  return {
+    width: center?.clientWidth || 800,
+    height: center?.clientHeight || 600,
+  };
+}
+
+function getContentBounds(network) {
+  const positions = network.getPositions();
+  const ids = Object.keys(positions);
+  if (!ids.length) return null;
+
+  let minX = Infinity;
+  let maxX = -Infinity;
+  let minY = Infinity;
+  let maxY = -Infinity;
+  for (const id of ids) {
+    const p = positions[id];
+    minX = Math.min(minX, p.x);
+    maxX = Math.max(maxX, p.x);
+    minY = Math.min(minY, p.y);
+    maxY = Math.max(maxY, p.y);
+  }
+
+  const pad = network._aromatic ? 220 : 320;
+  return {
+    minX: minX - pad,
+    maxX: maxX + pad,
+    minY: minY - pad,
+    maxY: maxY + pad,
+  };
+}
+
 export function recordFitScale(network) {
   if (!network) return;
   const fit = network.getScale() || 1;
+  const limits = activeZoomLimits();
   network._fitScale = fit;
-  const min = Math.max(ZOOM_LIMITS.absoluteMin, fit * ZOOM_LIMITS.minRatioOfFit);
-  const max = Math.min(ZOOM_LIMITS.absoluteMax, fit * ZOOM_LIMITS.maxRatioOfFit);
+  network._fitView = network.getViewPosition();
+  network._zoomLimits = limits;
+  const min = Math.max(limits.absoluteMin, fit * limits.minRatioOfFit);
+  const max = Math.min(limits.absoluteMax, fit * limits.maxRatioOfFit);
   network._zoomMin = min;
   network._zoomMax = max;
   try {
@@ -104,27 +158,75 @@ export function recordFitScale(network) {
 }
 
 export function clampScale(network, scale) {
-  const min = network?._zoomMin ?? ZOOM_LIMITS.absoluteMin;
-  const max = network?._zoomMax ?? ZOOM_LIMITS.absoluteMax;
+  const limits = network?._zoomLimits ?? activeZoomLimits();
+  const min = network?._zoomMin ?? limits.absoluteMin;
+  const max = network?._zoomMax ?? limits.absoluteMax;
   return Math.min(max, Math.max(min, scale));
 }
 
-let _clampingZoom = false;
+let _clampingView = false;
+let _panRaf = 0;
 
-export function bindZoomConstraints(network) {
-  if (!network || network._zoomBound) return;
-  network._zoomBound = true;
+export function constrainView(network) {
+  if (!network?.body?.data || _clampingView || !network._fitScale) return;
 
-  network.on("zoom", () => {
-    if (_clampingZoom || !network._fitScale) return;
-    const current = network.getScale();
-    const clamped = clampScale(network, current);
-    if (Math.abs(current - clamped) > 0.002) {
-      _clampingZoom = true;
-      network.moveTo({ scale: clamped, animation: false });
-      _clampingZoom = false;
-    }
-  });
+  const bounds = getContentBounds(network);
+  if (!bounds) return;
+
+  const scale = clampScale(network, network.getScale());
+  const view = network.getViewPosition();
+  const { width, height } = getCanvasSize(network);
+  const halfW = width / (2 * scale);
+  const halfH = height / (2 * scale);
+  const limits = network._zoomLimits ?? activeZoomLimits();
+
+  const spanX = bounds.maxX - bounds.minX;
+  const spanY = bounds.maxY - bounds.minY;
+  const slackX = spanX * limits.panSlackRatio;
+  const slackY = spanY * limits.panSlackRatio;
+
+  let minViewX = bounds.minX + halfW - slackX;
+  let maxViewX = bounds.maxX - halfW + slackX;
+  let minViewY = bounds.minY + halfH - slackY;
+  let maxViewY = bounds.maxY - halfH + slackY;
+
+  if (minViewX > maxViewX) {
+    const mid = (bounds.minX + bounds.maxX) / 2;
+    minViewX = maxViewX = mid;
+  }
+  if (minViewY > maxViewY) {
+    const mid = (bounds.minY + bounds.maxY) / 2;
+    minViewY = maxViewY = mid;
+  }
+
+  const x = Math.min(maxViewX, Math.max(minViewX, view.x));
+  const y = Math.min(maxViewY, Math.max(minViewY, view.y));
+
+  const scaleChanged = Math.abs(scale - network.getScale()) > 0.002;
+  const posChanged = Math.abs(x - view.x) > 1 || Math.abs(y - view.y) > 1;
+
+  if (scaleChanged || posChanged) {
+    _clampingView = true;
+    network.moveTo({ position: { x, y }, scale, animation: false });
+    _clampingView = false;
+  }
+}
+
+export function bindViewConstraints(network) {
+  if (!network || network._viewBound) return;
+  network._viewBound = true;
+
+  const scheduleConstrain = () => {
+    if (_panRaf) cancelAnimationFrame(_panRaf);
+    _panRaf = requestAnimationFrame(() => {
+      _panRaf = 0;
+      constrainView(network);
+    });
+  };
+
+  network.on("zoom", scheduleConstrain);
+  network.on("dragging", scheduleConstrain);
+  network.on("dragEnd", () => constrainView(network));
 }
 
 /** vis-network heightConstraint only supports minimum (not maximum). */
@@ -357,7 +459,7 @@ export function createMindMapGraph(container, nodes, reactions, layout, graphOpt
   network._aromatic = aromatic;
   network._svgArrows = true;
   refreshAromaticEdges(network);
-  bindZoomConstraints(network);
+  bindViewConstraints(network);
   return network;
 }
 
@@ -445,7 +547,10 @@ export function fitMindMap(network, animation = true) {
   if (network._aromatic) {
     opts.padding = 60;
   }
-  const applyFitScale = () => recordFitScale(network);
+  const applyFitScale = () => {
+    recordFitScale(network);
+    constrainView(network);
+  };
   if (animation) {
     network.once("animationFinished", applyFitScale);
   } else {

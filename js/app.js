@@ -11,7 +11,8 @@ import {
   refreshAromaticEdges,
   clampScale,
   recordFitScale,
-} from "./graph.js?v=20260520fix";
+  constrainView,
+} from "./graph.js?v=20260520v2";
 import {
   mountNodeLabelOverlays,
   bindNodeLabelSync,
@@ -661,14 +662,16 @@ function wireToolbarEvents() {
 
   document.getElementById("zoom-in-btn").addEventListener("click", () => {
     if (!state.network) return;
-    const scale = clampScale(state.network, state.network.getScale() * 1.25);
+    const scale = clampScale(state.network, state.network.getScale() * 1.2);
     state.network.moveTo({ scale, animation: true });
+    state.network.once("animationFinished", () => constrainView(state.network));
   });
 
   document.getElementById("zoom-out-btn").addEventListener("click", () => {
     if (!state.network) return;
-    const scale = clampScale(state.network, state.network.getScale() / 1.25);
+    const scale = clampScale(state.network, state.network.getScale() / 1.2);
     state.network.moveTo({ scale, animation: true });
+    state.network.once("animationFinished", () => constrainView(state.network));
   });
 
   document.addEventListener("keydown", (e) => {
@@ -704,10 +707,23 @@ function wireToolbarEvents() {
   });
 }
 
+function wireViewportConstraints() {
+  let resizeTimer;
+  window.addEventListener("resize", () => {
+    clearTimeout(resizeTimer);
+    resizeTimer = setTimeout(() => {
+      if (!state.network?._fitScale) return;
+      recordFitScale(state.network);
+      constrainView(state.network);
+    }, 250);
+  });
+}
+
 async function init() {
   try {
     wireToolbarEvents();
     wireZoomModal();
+    wireViewportConstraints();
     await switchPathway("aliphatic");
   } catch (err) {
     const banner = document.getElementById("path-banner");
