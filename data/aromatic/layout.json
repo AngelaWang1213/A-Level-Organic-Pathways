@@ -1,0 +1,27 @@
+{
+  "meta": {
+    "pathway": "aromatic",
+    "description": "Aromatic layout — spread into center; arrows match aliphatic weight"
+  },
+  "zones": [],
+  "positions": {
+    "benzene": { "x": 0, "y": -720 },
+    "alkylbenzene": { "x": -480, "y": -520 },
+    "acetyl_benzene": { "x": 480, "y": -520 },
+    "nitrobenzene": { "x": -680, "y": -280 },
+    "chlorobenzene": { "x": 720, "y": -520 },
+    "phenylammonium_chloride": { "x": -400, "y": 20 },
+    "phenylamine": { "x": -820, "y": 280 },
+    "benzenediazonium_chloride": { "x": -520, "y": 480 },
+    "phenol": { "x": 720, "y": 400 },
+    "sodium_phenolate": { "x": 680, "y": 60 },
+    "phenyl_ethanoate": { "x": 80, "y": 720 },
+    "tribromophenol": { "x": 720, "y": 920 },
+    "azo_dye_yellow_orange": { "x": -220, "y": 820 },
+    "azo_dye_yellow": { "x": -480, "y": 980 },
+    "azo_dye_red": { "x": -720, "y": 780 },
+    "n_alkylbenzamide": { "x": 320, "y": 40 },
+    "sodium_benzoate": { "x": 1180, "y": -80 },
+    "benzoic_acid": { "x": 1180, "y": 440 }
+  }
+}

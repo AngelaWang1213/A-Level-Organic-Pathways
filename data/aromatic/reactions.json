@@ -1,0 +1,257 @@
+{
+  "meta": {
+    "pathway": "aromatic",
+    "version": "2.1.0",
+    "source": "Aromatic Organic Pathway Map",
+    "exam_board": "WJEC",
+    "review_status": "draft"
+  },
+  "reactions": [
+    {
+      "id": "aro_benzene_alkylbenzene_0",
+      "from": "benzene",
+      "to": "alkylbenzene",
+      "mechanism": "Electrophilic Substitution (Alkylation)",
+      "reagents": ["R-Cl", "AlCl3"],
+      "conditions": ["Anhydrous", "Room temperature"],
+      "tier": "A2"
+    },
+    {
+      "id": "aro_benzene_acetyl_benzene_1",
+      "from": "benzene",
+      "to": "acetyl_benzene",
+      "mechanism": "Electrophilic Substitution (Acylation)",
+      "reagents": ["R-COCl", "AlCl3"],
+      "conditions": ["Anhydrous", "Heat (60°C, 30 mins)"],
+      "tier": "A2"
+    },
+    {
+      "id": "aro_benzene_nitrobenzene_2",
+      "from": "benzene",
+      "to": "nitrobenzene",
+      "mechanism": "Electrophilic Substitution (Nitration)",
+      "reagents": ["Conc. H2SO4", "Conc. HNO3"],
+      "conditions": ["50–60°C"],
+      "tier": "A2"
+    },
+    {
+      "id": "aro_nitrobenzene_phenylamine_3",
+      "from": "nitrobenzene",
+      "to": "phenylamine",
+      "mechanism": "Reduction",
+      "reagents": ["Sn", "Conc. HCl"],
+      "conditions": ["Heat", "then NaOH(aq)"],
+      "notes": "Also via phenylammonium chloride (see arrows on map)",
+      "tier": "A2"
+    },
+    {
+      "id": "aro_nitrobenzene_phenylammonium_chloride_3b",
+      "from": "nitrobenzene",
+      "to": "phenylammonium_chloride",
+      "mechanism": "Reduction",
+      "reagents": ["Conc. HCl"],
+      "conditions": ["Heat"],
+      "tier": "A2"
+    },
+    {
+      "id": "aro_phenylammonium_chloride_phenylamine_3c",
+      "from": "phenylammonium_chloride",
+      "to": "phenylamine",
+      "mechanism": "Acid-base / deprotonation",
+      "reagents": ["NaOH(aq)"],
+      "conditions": [],
+      "tier": "A2"
+    },
+    {
+      "id": "aro_phenylamine_phenylammonium_chloride_3d",
+      "from": "phenylamine",
+      "to": "phenylammonium_chloride",
+      "mechanism": "Salt formation",
+      "reagents": ["HCl"],
+      "conditions": [],
+      "tier": "A2"
+    },
+    {
+      "id": "aro_phenylamine_benzenediazonium_chloride_4",
+      "from": "phenylamine",
+      "to": "benzenediazonium_chloride",
+      "mechanism": "Diazotisation",
+      "reagents": ["NaNO2 + HCl (in situ HNO2)"],
+      "conditions": ["Temperature < 10°C (usually 5°C)"],
+      "tier": "A2"
+    },
+    {
+      "id": "aro_benzenediazonium_chloride_phenol_5",
+      "from": "benzenediazonium_chloride",
+      "to": "phenol",
+      "mechanism": "Decomposition / Hydrolysis",
+      "reagents": ["H2O"],
+      "conditions": ["Warm"],
+      "notes": "Evolution of N2 gas",
+      "tier": "A2"
+    },
+    {
+      "id": "aro_benzenediazonium_chloride_azo_dye_yellow_orange_6",
+      "from": "benzenediazonium_chloride",
+      "to": "azo_dye_yellow_orange",
+      "mechanism": "Coupling Reaction",
+      "reagents": ["Phenol in NaOH(aq)"],
+      "conditions": ["< 10°C"],
+      "notes": "Yellow/Orange dye formed",
+      "tier": "A2"
+    },
+    {
+      "id": "aro_benzenediazonium_chloride_azo_dye_yellow_7",
+      "from": "benzenediazonium_chloride",
+      "to": "azo_dye_yellow",
+      "mechanism": "Coupling Reaction",
+      "reagents": ["Phenylamine"],
+      "conditions": ["< 10°C"],
+      "notes": "Yellow dye/solid formed",
+      "tier": "A2"
+    },
+    {
+      "id": "aro_benzenediazonium_chloride_azo_dye_red_8",
+      "from": "benzenediazonium_chloride",
+      "to": "azo_dye_red",
+      "mechanism": "Coupling Reaction",
+      "reagents": ["Naphthalen-2-ol in NaOH(aq)"],
+      "conditions": ["< 10°C"],
+      "notes": "Red dye formed",
+      "tier": "A2"
+    },
+    {
+      "id": "aro_benzene_chlorobenzene_9",
+      "from": "benzene",
+      "to": "chlorobenzene",
+      "mechanism": "Electrophilic Substitution (Halogenation)",
+      "reagents": ["Cl2", "AlCl3/FeCl3 catalyst"],
+      "conditions": ["Anhydrous", "Absence of light", "Room temperature"],
+      "smooth_roundness": 0.42,
+      "curve_bend_sign": -1,
+      "curve_bend_scale": 1.25,
+      "tier": "A2"
+    },
+    {
+      "id": "aro_chlorobenzene_sodium_phenolate_10",
+      "from": "chlorobenzene",
+      "to": "sodium_phenolate",
+      "mechanism": "Nucleophilic Substitution",
+      "reagents": ["NaOH(aq)"],
+      "conditions": ["350°C", "300 atm"],
+      "tier": "A2"
+    },
+    {
+      "id": "aro_sodium_phenolate_phenol_11",
+      "from": "sodium_phenolate",
+      "to": "phenol",
+      "mechanism": "Acidification",
+      "reagents": ["Dilute HCl(aq) or H+(aq)"],
+      "conditions": [],
+      "tier": "A2"
+    },
+    {
+      "id": "aro_phenol_sodium_phenolate_12",
+      "from": "phenol",
+      "to": "sodium_phenolate",
+      "mechanism": "Acid-Base Reaction",
+      "reagents": ["NaOH(aq) or Na(s)"],
+      "conditions": [],
+      "tier": "A2"
+    },
+    {
+      "id": "aro_sodium_phenolate_phenyl_ethanoate_13",
+      "from": "sodium_phenolate",
+      "to": "phenyl_ethanoate",
+      "mechanism": "Ethanoylation / Nucleophilic Addition-Elimination",
+      "reagents": ["CH3COCl"],
+      "conditions": ["Room temperature"],
+      "notes": "NaCl formed; white ppt",
+      "tier": "A2"
+    },
+    {
+      "id": "aro_phenyl_ethanoate_sodium_benzoate_14",
+      "from": "phenyl_ethanoate",
+      "to": "sodium_benzoate",
+      "mechanism": "Alkaline Hydrolysis",
+      "reagents": ["NaOH(aq)"],
+      "conditions": ["Reflux"],
+      "tier": "A2"
+    },
+    {
+      "id": "aro_alkylbenzene_sodium_benzoate_15",
+      "from": "alkylbenzene",
+      "to": "sodium_benzoate",
+      "mechanism": "Oxidation",
+      "reagents": ["Na2CO3(aq)/KMnO4(aq) (alkaline)"],
+      "conditions": ["Reflux"],
+      "notes": "Purple to brown ppt (MnO2)",
+      "tier": "A2"
+    },
+    {
+      "id": "aro_sodium_benzoate_benzoic_acid_16",
+      "from": "sodium_benzoate",
+      "to": "benzoic_acid",
+      "mechanism": "Acidification",
+      "reagents": ["HCl(aq)"],
+      "conditions": [],
+      "notes": "White ppt of benzoic acid forms",
+      "tier": "A2"
+    },
+    {
+      "id": "aro_benzoic_acid_sodium_benzoate_17",
+      "from": "benzoic_acid",
+      "to": "sodium_benzoate",
+      "mechanism": "Neutralisation",
+      "reagents": ["NaOH(aq) or Na2CO3(aq)"],
+      "conditions": [],
+      "tier": "A2"
+    },
+    {
+      "id": "aro_benzoic_acid_benzene_18",
+      "from": "benzoic_acid",
+      "to": "benzene",
+      "mechanism": "Decarboxylation",
+      "reagents": ["Soda Lime (NaOH/CaO)"],
+      "conditions": ["Heat"],
+      "tier": "A2"
+    },
+    {
+      "id": "aro_acetyl_benzene_n_alkylbenzamide_19",
+      "from": "acetyl_benzene",
+      "to": "n_alkylbenzamide",
+      "mechanism": "Amidation",
+      "reagents": ["R-NH2"],
+      "conditions": ["Room temperature"],
+      "tier": "A2"
+    },
+    {
+      "id": "aro_n_alkylbenzamide_sodium_benzoate_20",
+      "from": "n_alkylbenzamide",
+      "to": "sodium_benzoate",
+      "mechanism": "Alkaline Hydrolysis",
+      "reagents": ["NaOH(aq)"],
+      "conditions": ["Reflux"],
+      "tier": "A2"
+    },
+    {
+      "id": "aro_n_alkylbenzamide_benzoic_acid_21",
+      "from": "n_alkylbenzamide",
+      "to": "benzoic_acid",
+      "mechanism": "Acid Hydrolysis",
+      "reagents": ["HCl(aq)"],
+      "conditions": ["Reflux"],
+      "tier": "A2"
+    },
+    {
+      "id": "aro_phenol_tribromophenol_22",
+      "from": "phenol",
+      "to": "tribromophenol",
+      "mechanism": "Electrophilic Substitution (Bromination)",
+      "reagents": ["Bromine water (Br2 aq)"],
+      "conditions": ["Room temperature"],
+      "notes": "Orange to colourless; White ppt forms",
+      "tier": "A2"
+    }
+  ]
+}

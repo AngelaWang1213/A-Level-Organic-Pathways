@@ -1,0 +1,165 @@
+{
+  "meta": {
+    "pathway": "aliphatic",
+    "version": "0.2.0",
+    "description": "Aliphatic functional group nodes with displayed formulae (example compounds)"
+  },
+  "nodes": [
+    {
+      "id": "alkane",
+      "label": "Alkane",
+      "example": "ethane",
+      "displayed_formula": "CH₃—CH₃",
+      "notes": "Includes decarboxylation products (e.g. CH₄ from sodium ethanoate)",
+      "tier": "AS"
+    },
+    {
+      "id": "alkene",
+      "label": "Alkene",
+      "example": "ethene",
+      "displayed_formula": "CH₂=CH₂",
+      "tier": "AS"
+    },
+    {
+      "id": "haloalkane",
+      "label": "Haloalkane",
+      "example": "chloroethane",
+      "displayed_formula": "CH₃—CH₂—Cl",
+      "tier": "AS"
+    },
+    {
+      "id": "dihaloalkane",
+      "label": "Dihaloalkane",
+      "example": "1,2-dibromoethane",
+      "displayed_formula": "CH₂Br—CH₂Br",
+      "tier": "AS"
+    },
+    {
+      "id": "primary_alcohol",
+      "label": "Primary alcohol",
+      "example": "ethanol",
+      "displayed_formula": "CH₃—CH₂—OH",
+      "tier": "AS"
+    },
+    {
+      "id": "secondary_alcohol",
+      "label": "Secondary alcohol",
+      "example": "propan-2-ol",
+      "displayed_formula": "CH₃—CH(OH)—CH₃",
+      "tier": "A2"
+    },
+    {
+      "id": "tertiary_alcohol",
+      "label": "Tertiary alcohol",
+      "example": "2-methylpropan-2-ol",
+      "displayed_formula": "(CH₃)₃C—OH",
+      "tier": "A2"
+    },
+    {
+      "id": "diol",
+      "label": "Diol",
+      "example": "ethane-1,2-diol",
+      "displayed_formula": "HO—CH₂—CH₂—OH",
+      "tier": "AS"
+    },
+    {
+      "id": "aldehyde",
+      "label": "Aldehyde (alkanal)",
+      "example": "ethanal",
+      "displayed_formula": "CH₃—CHO",
+      "tier": "A2"
+    },
+    {
+      "id": "ketone",
+      "label": "Ketone (alkanone)",
+      "example": "propanone",
+      "displayed_formula": "CH₃—CO—CH₃",
+      "tier": "A2"
+    },
+    {
+      "id": "carboxylic_acid",
+      "label": "Carboxylic acid",
+      "example": "ethanoic acid",
+      "displayed_formula": "CH₃—COOH",
+      "tier": "AS"
+    },
+    {
+      "id": "carboxylate_salt",
+      "label": "Carboxylate salt",
+      "example": "sodium ethanoate",
+      "displayed_formula": "CH₃—COO⁻ Na⁺",
+      "tier": "A2"
+    },
+    {
+      "id": "ester",
+      "label": "Ester",
+      "example": "ethyl ethanoate",
+      "displayed_formula": "CH₃—COO—CH₂CH₃",
+      "tier": "AS"
+    },
+    {
+      "id": "acyl_chloride",
+      "label": "Acyl chloride",
+      "example": "ethanoyl chloride",
+      "displayed_formula": "CH₃—COCl",
+      "tier": "A2"
+    },
+    {
+      "id": "acid_amide",
+      "label": "Acid amide",
+      "example": "ethanamide",
+      "displayed_formula": "CH₃—CONH₂",
+      "tier": "A2"
+    },
+    {
+      "id": "n_substituted_amide",
+      "label": "N-substituted amide",
+      "example": "N-ethylethanamide",
+      "displayed_formula": "CH₃—CONH—CH₂CH₃",
+      "tier": "A2"
+    },
+    {
+      "id": "nitrile",
+      "label": "Nitrile",
+      "example": "ethanenitrile",
+      "displayed_formula": "CH₃—C≡N",
+      "notes": "Also hydroxynitriles from HCN + aldehyde/ketone (e.g. HO—CH₂—C≡N)",
+      "tier": "A2"
+    },
+    {
+      "id": "primary_amine",
+      "label": "Primary amine",
+      "example": "ethylamine",
+      "displayed_formula": "CH₃—CH₂—NH₂",
+      "tier": "A2"
+    },
+    {
+      "id": "secondary_amine",
+      "label": "Secondary amine",
+      "example": "diethylamine",
+      "displayed_formula": "(CH₃CH₂)₂NH",
+      "tier": "A2"
+    },
+    {
+      "id": "ammonium_salt",
+      "label": "Ammonium salt",
+      "example": "ethylammonium chloride",
+      "displayed_formula": "CH₃CH₂NH₃⁺ Cl⁻",
+      "tier": "A2"
+    },
+    {
+      "id": "ammonium_carboxylate",
+      "label": "Ammonium carboxylate",
+      "example": "ammonium ethanoate",
+      "displayed_formula": "CH₃COO⁻ NH₄⁺",
+      "tier": "A2"
+    },
+    {
+      "id": "polyalkene",
+      "label": "Poly(alkene)",
+      "example": "poly(ethene)",
+      "displayed_formula": "—[CH₂—CH₂]ₙ—",
+      "tier": "AS"
+    }
+  ]
+}

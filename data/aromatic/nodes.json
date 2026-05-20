@@ -1,0 +1,142 @@
+{
+  "meta": {
+    "pathway": "aromatic",
+    "version": "2.0.0",
+    "description": "Aromatic organic pathway nodes (WJEC A2)",
+    "source": "Aromatic Organic Pathways"
+  },
+  "nodes": [
+    {
+      "id": "benzene",
+      "label": "Benzene",
+      "example": "benzene",
+      "displayed_formula": "C₆H₆",
+      "tier": "A2"
+    },
+    {
+      "id": "alkylbenzene",
+      "label": "Alkylbenzene",
+      "example": "methylbenzene",
+      "displayed_formula": "C₆H₅—CH₃",
+      "tier": "A2"
+    },
+    {
+      "id": "acetyl_benzene",
+      "label": "Acetyl benzene",
+      "example": "phenylethanone",
+      "displayed_formula": "C₆H₅—CO—CH₃",
+      "tier": "A2"
+    },
+    {
+      "id": "nitrobenzene",
+      "label": "Nitrobenzene",
+      "example": "nitrobenzene",
+      "displayed_formula": "C₆H₅—NO₂",
+      "tier": "A2"
+    },
+    {
+      "id": "phenylamine",
+      "label": "Phenylamine",
+      "example": "phenylamine",
+      "displayed_formula": "C₆H₅—NH₂",
+      "tier": "A2"
+    },
+    {
+      "id": "phenylammonium_chloride",
+      "label": "Phenylammonium chloride",
+      "example": "phenylammonium chloride",
+      "displayed_formula": "C₆H₅—NH₃⁺ Cl⁻",
+      "structure_image": "images/structures/phenylammonium_chloride.png",
+      "tier": "A2"
+    },
+    {
+      "id": "benzenediazonium_chloride",
+      "label": "Benzenediazonium chloride",
+      "example": "benzenediazonium chloride",
+      "displayed_formula": "C₆H₅—N₂⁺ Cl⁻",
+      "tier": "A2"
+    },
+    {
+      "id": "chlorobenzene",
+      "label": "Chlorobenzene",
+      "example": "chlorobenzene",
+      "displayed_formula": "C₆H₅—Cl",
+      "tier": "A2"
+    },
+    {
+      "id": "sodium_phenolate",
+      "label": "Sodium phenolate",
+      "example": "sodium phenoxide",
+      "displayed_formula": "C₆H₅—O⁻ Na⁺",
+      "tier": "A2"
+    },
+    {
+      "id": "phenol",
+      "label": "Phenol",
+      "example": "phenol",
+      "displayed_formula": "C₆H₅—OH",
+      "tier": "A2"
+    },
+    {
+      "id": "phenyl_ethanoate",
+      "label": "Phenyl ethanoate",
+      "example": "phenyl ethanoate",
+      "displayed_formula": "C₆H₅—OCOCH₃",
+      "structure_image": "images/structures/phenyl_ethanoate.png",
+      "tier": "A2"
+    },
+    {
+      "id": "n_alkylbenzamide",
+      "label": "N-alkylbenzamide",
+      "example": "N-alkylbenzamide",
+      "displayed_formula": "C₆H₅—CONH—R",
+      "structure_image": "images/structures/n_alkylbenzamide.jpg",
+      "tier": "A2"
+    },
+    {
+      "id": "sodium_benzoate",
+      "label": "Sodium benzoate",
+      "example": "sodium benzoate",
+      "displayed_formula": "C₆H₅—COO⁻ Na⁺",
+      "tier": "A2"
+    },
+    {
+      "id": "benzoic_acid",
+      "label": "Benzoic acid",
+      "example": "benzoic acid",
+      "displayed_formula": "C₆H₅—COOH",
+      "tier": "A2"
+    },
+    {
+      "id": "tribromophenol",
+      "label": "2,4,6-Tribromophenol",
+      "example": "2,4,6-tribromophenol",
+      "displayed_formula": "C₆H₂Br₃OH",
+      "tier": "A2"
+    },
+    {
+      "id": "azo_dye_yellow_orange",
+      "label": "Azo Dye (Yellow/Orange)",
+      "example": "coupling with phenol",
+      "displayed_formula": "—N=N— (yellow/orange)",
+      "structure_image": "images/structures/azo_dye_yellow_orange.png",
+      "tier": "A2"
+    },
+    {
+      "id": "azo_dye_yellow",
+      "label": "Azo Dye (Yellow)",
+      "example": "coupling with phenylamine",
+      "displayed_formula": "—N=N— (yellow)",
+      "structure_image": "images/structures/azo_dye_yellow.png",
+      "tier": "A2"
+    },
+    {
+      "id": "azo_dye_red",
+      "label": "Azo Dye (Red)",
+      "example": "coupling with naphthalen-2-ol",
+      "displayed_formula": "—N=N— (red)",
+      "structure_image": "images/structures/azo_dye_red.png",
+      "tier": "A2"
+    }
+  ]
+}

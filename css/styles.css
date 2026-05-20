@@ -1,0 +1,987 @@
+/* Heirloom Plum Brunch — light brunch
+   https://www.figma.com/color-palettes/heirloom-plum-brunch/ */
+:root {
+  --plum-deep: #6f2451;
+  --plum-mid: #8f3a66;
+  --plum-soft: #b86a94;
+  --plum-border: #9e4872;
+  --a2-deep: #5a1f42;
+  --surface-plum: #7d2f5c;
+
+  --pink-light: #ec9ccc;
+  --pink-pale: #f5d4e8;
+  --accent-strong: #f5c4dc;
+  --highlight-blush: #fadceb;
+
+  --cream: #fff6fa;
+  --cream-muted: #f5e6ee;
+
+  --bg: var(--cream);
+  --bg-muted: var(--cream-muted);
+  --surface: var(--pink-pale);
+  --surface-elevated: var(--cream);
+  --border: var(--plum-border);
+  --text: var(--plum-deep);
+  --muted: var(--plum-soft);
+  --accent: var(--pink-light);
+  --accent-on: var(--plum-deep);
+  --highlight: var(--plum-mid);
+  --highlight-strong: var(--pink-light);
+
+  --as-bg: var(--pink-pale);
+  --as-border: var(--pink-light);
+  --as-text: var(--plum-deep);
+  --a2-bg: var(--highlight-blush);
+  --a2-border: var(--accent-strong);
+  --a2-text: var(--a2-deep);
+
+  --input-bg: var(--cream);
+  --table-head: var(--plum-mid);
+  --table-cell: var(--cream-muted);
+  --path-banner-bg: var(--highlight-blush);
+  --path-banner-border: var(--pink-light);
+  --graph-gradient-inner: var(--pink-pale);
+  --graph-gradient-outer: var(--cream);
+
+  --zone-hydrocarbons-bg: var(--cream-muted);
+  --zone-hydrocarbons-border: var(--plum-mid);
+  --zone-hydrocarbons-text: var(--plum-deep);
+
+  --zone-alcohols-bg: var(--pink-pale);
+  --zone-alcohols-border: var(--pink-light);
+  --zone-alcohols-text: var(--plum-mid);
+
+  --zone-carbonyls-bg: rgba(236, 156, 204, 0.35);
+  --zone-carbonyls-border: var(--plum-soft);
+  --zone-carbonyls-text: var(--plum-deep);
+
+  --zone-acids-bg: var(--highlight-blush);
+  --zone-acids-border: var(--accent-strong);
+  --zone-acids-text: var(--surface-plum);
+
+  --zone-nitrogen-bg: var(--accent-strong);
+  --zone-nitrogen-border: var(--plum-border);
+  --zone-nitrogen-text: var(--a2-deep);
+}
+
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+
+html,
+body {
+  margin: 0;
+  height: 100%;
+  overflow: hidden;
+  font-family: "Courier New", Courier, "Liberation Mono", monospace;
+  font-weight: 700;
+  background: var(--bg);
+  color: var(--text);
+}
+
+.app {
+  display: flex;
+  flex-direction: column;
+  height: 100vh;
+  height: 100dvh;
+}
+
+.toolbar {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 0.65rem 1rem;
+  padding: 0.55rem 0.85rem;
+  background: linear-gradient(90deg, var(--pink-pale) 0%, var(--highlight-blush) 50%, var(--cream-muted) 100%);
+  border-bottom: 2px solid var(--pink-light);
+  z-index: 20;
+}
+
+.toolbar-brand {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  margin-right: auto;
+}
+
+.toolbar-brand h1 {
+  margin: 0;
+  font-size: 1rem;
+  font-weight: 700;
+  color: var(--plum-deep);
+}
+
+.badge {
+  font-size: 0.65rem;
+  padding: 0.15rem 0.45rem;
+  border-radius: 4px;
+  background: var(--plum-mid);
+  color: var(--cream);
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+}
+
+.pathway-switch {
+  display: flex;
+  border-radius: 8px;
+  overflow: hidden;
+  border: 1px solid var(--plum-soft);
+}
+
+.pathway-tab {
+  padding: 0.4rem 0.85rem;
+  border: none;
+  background: var(--cream);
+  color: var(--plum-mid);
+  font-family: inherit;
+  font-size: 0.78rem;
+  font-weight: 700;
+  cursor: pointer;
+}
+
+.pathway-tab:hover {
+  background: var(--pink-pale);
+  color: var(--plum-deep);
+}
+
+.pathway-tab.active {
+  background: var(--pink-light);
+  color: var(--plum-deep);
+}
+
+.toolbar-path {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 0.4rem;
+}
+
+.toolbar-path select {
+  min-width: 9rem;
+  max-width: 11rem;
+  padding: 0.4rem 0.5rem;
+  border-radius: 8px;
+  border: 1px solid var(--plum-soft);
+  background: var(--cream);
+  color: var(--plum-deep);
+  font-size: 0.8rem;
+}
+
+.toolbar-actions {
+  display: flex;
+  gap: 0.35rem;
+}
+
+.btn {
+  padding: 0.4rem 0.75rem;
+  border-radius: 8px;
+  border: none;
+  font-size: 0.8rem;
+  font-weight: 700;
+  cursor: pointer;
+  font-family: inherit;
+  white-space: nowrap;
+}
+
+.btn-primary {
+  background: var(--pink-light);
+  color: var(--plum-deep);
+  border: 1px solid var(--plum-mid);
+}
+
+.btn-primary:hover {
+  background: var(--accent-strong);
+  border-color: var(--plum-deep);
+}
+
+.btn-ghost {
+  background: var(--cream);
+  color: var(--plum-mid);
+  border: 1px solid var(--plum-soft);
+}
+
+.btn-ghost:hover {
+  color: var(--plum-deep);
+  border-color: var(--plum-mid);
+  background: var(--pink-pale);
+}
+
+.btn-icon {
+  width: 2rem;
+  height: 2rem;
+  padding: 0;
+  border-radius: 8px;
+  border: 1px solid var(--plum-soft);
+  background: var(--cream);
+  color: var(--plum-mid);
+  cursor: pointer;
+  font-size: 0.9rem;
+}
+
+.btn-icon:hover {
+  background: var(--highlight-blush);
+  color: var(--plum-deep);
+}
+
+.path-banner {
+  padding: 0.5rem 0.85rem;
+  background: var(--path-banner-bg);
+  border-bottom: 2px solid var(--path-banner-border);
+  font-size: 0.8rem;
+  z-index: 15;
+}
+
+.path-banner.hidden {
+  display: none;
+}
+
+#path-status {
+  display: block;
+  margin-bottom: 0.35rem;
+  color: var(--a2-deep);
+}
+
+.path-routes {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.4rem;
+}
+
+.route-chip {
+  padding: 0.35rem 0.65rem;
+  border-radius: 999px;
+  border: 1px solid var(--plum-soft);
+  background: var(--cream);
+  color: var(--plum-deep);
+  font-size: 0.75rem;
+  cursor: pointer;
+  font-family: inherit;
+}
+
+.route-chip:nth-child(3n + 2) {
+  background: var(--pink-pale);
+  border-color: var(--pink-light);
+}
+
+.route-chip:nth-child(3n) {
+  background: var(--highlight-blush);
+  border-color: var(--accent-strong);
+}
+
+.route-chip:hover,
+.route-chip.active {
+  border-color: var(--plum-deep);
+  background: var(--pink-light);
+  color: var(--a2-deep);
+}
+
+.route-steps {
+  margin-top: 0.5rem;
+  padding: 0.65rem 0.75rem;
+  background: var(--cream);
+  border: 1px solid var(--pink-light);
+  border-radius: 8px;
+  max-height: 32vh;
+  overflow-y: auto;
+  font-size: 0.75rem;
+}
+
+.zoom-hint {
+  margin: 0;
+  padding: 0.25rem 0.85rem;
+  font-size: 0.72rem;
+  color: var(--plum-soft);
+  background: var(--cream-muted);
+  z-index: 10;
+}
+
+.map-stage {
+  position: relative;
+  flex: 1;
+  min-height: 0;
+  overflow: hidden;
+}
+
+.graph {
+  width: 100%;
+  height: 100%;
+  background: radial-gradient(
+    ellipse 85% 65% at 50% 42%,
+    var(--graph-gradient-inner) 0%,
+    var(--graph-gradient-outer) 55%,
+    var(--cream-muted) 100%
+  );
+}
+
+div.vis-tooltip {
+  display: none !important;
+  visibility: hidden !important;
+}
+
+.zone-labels {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  z-index: 1;
+  opacity: 0.38;
+}
+
+.node-labels {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  z-index: 5;
+  overflow: hidden;
+}
+
+/* SVG overlay: lines + arrowheads (vis edges are invisible, click-only) */
+.aromatic-arrows {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  z-index: 20;
+  overflow: visible;
+  display: none;
+}
+
+/* Aliphatic: draw arrows under HTML node boxes so lines do not cross on top */
+.aromatic-arrows--below-labels {
+  z-index: 2;
+}
+
+.aromatic-arrows.active {
+  display: block;
+}
+
+.aromatic-arrows svg {
+  display: block;
+  width: 100%;
+  height: 100%;
+  overflow: visible;
+}
+
+.aromatic-arrows .arrow-hit,
+.aromatic-arrows .arrow-head-hit {
+  pointer-events: stroke;
+  cursor: pointer;
+}
+
+.aromatic-arrows .arrow-head-hit {
+  pointer-events: all;
+}
+
+.aromatic-arrows .arrow-visible {
+  pointer-events: none;
+}
+
+.node-label {
+  position: absolute;
+  text-align: center;
+  pointer-events: auto;
+  cursor: pointer;
+  transform-origin: center center;
+  padding: 0.35rem 0.5rem;
+  border-radius: 6px;
+  z-index: 6;
+  box-sizing: border-box;
+}
+
+/* Aliphatic: match vis-network hit box so clicks on the visible square register */
+.node-labels--aliphatic .node-label {
+  display: inline-flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  width: auto;
+  min-width: 240px;
+  min-height: 132px;
+  max-width: 340px;
+  padding: 18px 22px;
+  overflow: visible;
+  border: 2px solid transparent;
+  box-sizing: border-box;
+}
+
+.node-labels--aliphatic .node-label--tier-as {
+  background: var(--as-bg);
+  border-color: var(--as-border);
+}
+
+.node-labels--aliphatic .node-label--tier-a2 {
+  background: var(--a2-bg);
+  border-color: var(--a2-border);
+}
+
+.node-labels--aliphatic .node-label.active {
+  background: var(--pink-light);
+  border-color: var(--plum-deep);
+}
+
+.node-labels--aliphatic .node-label.dimmed {
+  background: var(--cream-muted);
+  border-color: rgba(158, 72, 114, 0.45);
+}
+
+/* Aromatic: compact boxes — leaves room for reaction arrows between nodes */
+.node-labels--aromatic .node-label {
+  display: inline-block;
+  width: max-content;
+  max-width: 280px;
+  min-width: 200px;
+  min-height: 155px;
+  padding: 12px 14px 10px;
+  overflow: visible;
+  border-radius: 10px;
+  border: 2px solid var(--a2-border);
+  background: var(--a2-bg);
+  pointer-events: auto;
+  cursor: pointer;
+}
+
+/* Clicks must hit the label, not pass through to canvas */
+.node-labels--aromatic .node-label * {
+  pointer-events: auto;
+}
+
+.node-labels--aromatic .node-label-ext-link {
+  cursor: pointer;
+}
+
+.node-labels--aromatic .node-label--tier-as {
+  border-color: var(--as-border);
+  background: var(--as-bg);
+}
+
+.node-labels--aromatic .node-label--tier-a2 {
+  border-color: var(--a2-border);
+  background: var(--a2-bg);
+}
+
+.node-labels--aromatic .node-label.active {
+  border-color: var(--plum-deep);
+  background: var(--pink-light);
+  box-shadow: 0 0 0 2px rgba(111, 36, 81, 0.2);
+}
+
+.node-labels--aromatic .node-label.dimmed {
+  opacity: 0.45;
+}
+
+.node-label.zoom-focus {
+  outline: 3px solid var(--plum-deep);
+  outline-offset: 2px;
+  z-index: 8;
+}
+
+.node-labels--aromatic .node-label.zoom-focus {
+  background: var(--pink-light);
+  border-color: var(--plum-deep);
+}
+
+.node-label-structure-wrap {
+  margin: 0.15em 0 0.2em;
+  line-height: 0;
+}
+
+/* Tight crop: small frame, structure zoomed to fill (less PubChem margin) */
+.node-labels--aromatic .node-label-structure-wrap {
+  width: 96px;
+  height: 96px;
+  margin: 0.15em auto 0.2em;
+  overflow: hidden;
+  border: 1px solid rgba(158, 72, 114, 0.25);
+  border-radius: 6px;
+  background: #fff;
+}
+
+.node-label-structure {
+  display: block;
+  margin: 0 auto;
+  width: 120px;
+  height: 120px;
+  object-fit: cover;
+  object-position: center;
+  background: #fff;
+  border: 1px solid rgba(158, 72, 114, 0.25);
+  border-radius: 6px;
+}
+
+.node-labels--aliphatic .node-label-structure {
+  pointer-events: none;
+}
+
+.node-labels--aromatic .node-label-structure {
+  width: 110px;
+  height: 110px;
+  margin: -7px;
+  border: none;
+  border-radius: 0;
+  transform: scale(1.38);
+  transform-origin: center center;
+}
+
+.node-labels--aromatic .node-label-structure-wrap--local .node-label-structure {
+  width: 96px;
+  height: 96px;
+  margin: 0;
+  object-fit: contain;
+  object-position: center;
+  transform: none;
+}
+
+.node-label-structure-links {
+  margin-top: 0.3em;
+  line-height: 1.3;
+  pointer-events: auto;
+}
+
+.node-label-ext-link {
+  font-family: "Segoe UI", system-ui, sans-serif;
+  font-size: 0.62rem;
+  font-weight: 600;
+  color: var(--plum-soft);
+  text-decoration: none;
+}
+
+.node-label-ext-link:hover {
+  color: var(--plum-deep);
+  text-decoration: underline;
+}
+
+.node-label-ext-sep {
+  font-size: 0.62rem;
+  color: var(--plum-soft);
+  margin: 0 0.15em;
+}
+
+.node-label-structure-svg {
+  width: 120px;
+  height: 120px;
+  margin: 0 auto;
+  background: #fff;
+  border: 1px solid rgba(158, 72, 114, 0.25);
+  border-radius: 6px;
+  overflow: hidden;
+}
+
+.node-labels--aliphatic .node-label-structure-svg {
+  pointer-events: none;
+}
+
+.node-labels--aromatic .node-label-structure-svg {
+  width: 96px;
+  height: 96px;
+}
+
+.node-label-structure-svg svg {
+  width: 100%;
+  height: 100%;
+  display: block;
+  transform-origin: center;
+}
+
+.node-labels--aromatic .node-label-structure-svg svg {
+  transform: scale(1.35);
+}
+
+.node-label-structure-missing {
+  margin: 0.25em 0 0;
+  font-size: 0.58rem;
+  line-height: 1.25;
+  color: var(--plum-soft);
+}
+
+.node-label:hover {
+  background: rgba(236, 156, 204, 0.2);
+}
+
+.node-label-title {
+  font-family: "Courier New", Courier, "Liberation Mono", monospace;
+  font-weight: 700;
+  font-size: 34px;
+  line-height: 1.3;
+  color: var(--plum-deep);
+  margin-bottom: 0.35em;
+}
+
+.node-label-detail {
+  font-family: "Courier New", Courier, "Liberation Mono", monospace;
+  font-weight: 700;
+  font-size: 17px;
+  line-height: 1.45;
+  color: var(--plum-mid);
+  margin-top: 0.2em;
+}
+
+.node-labels--aromatic .node-label-title {
+  font-size: 22px;
+  line-height: 1.2;
+  margin-bottom: 0.15em;
+  word-wrap: break-word;
+}
+
+.node-labels--aromatic .node-label-detail {
+  font-size: 13px;
+  line-height: 1.3;
+  word-wrap: break-word;
+}
+
+/* Double-click zoom modal */
+.node-zoom-modal {
+  position: fixed;
+  inset: 0;
+  z-index: 200;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 1.5rem;
+}
+
+.node-zoom-modal.hidden {
+  display: none;
+}
+
+.node-zoom-backdrop {
+  position: absolute;
+  inset: 0;
+  background: rgba(111, 36, 81, 0.45);
+  cursor: pointer;
+}
+
+.node-zoom-panel {
+  position: relative;
+  z-index: 1;
+  max-width: min(520px, 92vw);
+  max-height: 90vh;
+  overflow: auto;
+  background: var(--cream);
+  border: 2px solid var(--plum-border);
+  border-radius: 14px;
+  box-shadow: 0 12px 40px rgba(111, 36, 81, 0.28);
+  padding: 1.25rem 1.5rem 1.5rem;
+}
+
+.node-zoom-close {
+  position: absolute;
+  top: 0.5rem;
+  right: 0.65rem;
+  border: none;
+  background: transparent;
+  font-size: 1.75rem;
+  line-height: 1;
+  color: var(--plum-soft);
+  cursor: pointer;
+}
+
+.node-zoom-close:hover {
+  color: var(--plum-deep);
+}
+
+.node-zoom-title {
+  margin: 0 2rem 0.75rem 0;
+  font-family: "Courier New", Courier, monospace;
+  font-size: 1.5rem;
+  color: var(--plum-deep);
+}
+
+.node-zoom-card {
+  text-align: center;
+}
+
+.node-zoom-card .node-label-title {
+  font-size: 1.35rem;
+}
+
+.node-zoom-card .node-label-detail {
+  font-size: 1rem;
+}
+
+.node-zoom-card .node-label-structure-wrap {
+  width: 200px;
+  height: 200px;
+  overflow: hidden;
+}
+
+.node-zoom-card .node-label-structure {
+  width: 220px;
+  height: 220px;
+  margin: -10px;
+  transform: scale(1.4);
+}
+
+.node-zoom-card .node-label-structure-svg {
+  width: 200px;
+  height: 200px;
+}
+
+.node-zoom-card .node-label-structure-svg svg {
+  transform: scale(1.35);
+}
+
+.node-zoom-card .node-label-structure-links {
+  margin-top: 0.5em;
+}
+
+.node-zoom-card .node-label-ext-link {
+  font-size: 0.8rem;
+}
+
+.node-label.dimmed .node-label-title {
+  color: var(--plum-soft);
+}
+
+.node-label.dimmed .node-label-detail {
+  color: rgba(184, 106, 148, 0.75);
+}
+
+.node-label.active .node-label-title {
+  color: var(--a2-deep);
+}
+
+.node-label.active .node-label-detail {
+  color: var(--surface-plum);
+}
+
+.zone-label {
+  position: absolute;
+  transform: translate(-50%, -50%);
+  font-size: 0.7rem;
+  font-weight: 700;
+  font-family: "Courier New", Courier, monospace;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  white-space: nowrap;
+  padding: 0.25rem 0.6rem;
+  border-radius: 6px;
+  border: 1px dashed;
+}
+
+.zone-label--hydrocarbons {
+  color: var(--zone-hydrocarbons-text);
+  border-color: color-mix(in srgb, var(--zone-hydrocarbons-border) 55%, transparent);
+  background: color-mix(in srgb, var(--zone-hydrocarbons-bg) 45%, transparent);
+}
+
+.zone-label--alcohols {
+  color: var(--zone-alcohols-text);
+  border-color: color-mix(in srgb, var(--zone-alcohols-border) 55%, transparent);
+  background: color-mix(in srgb, var(--zone-alcohols-bg) 45%, transparent);
+}
+
+.zone-label--carbonyls {
+  color: var(--zone-carbonyls-text);
+  border-color: color-mix(in srgb, var(--zone-carbonyls-border) 55%, transparent);
+  background: color-mix(in srgb, var(--zone-carbonyls-bg) 45%, transparent);
+}
+
+.zone-label--acids {
+  color: var(--zone-acids-text);
+  border-color: color-mix(in srgb, var(--zone-acids-border) 55%, transparent);
+  background: color-mix(in srgb, var(--zone-acids-bg) 45%, transparent);
+}
+
+.zone-label--nitrogen {
+  color: var(--zone-nitrogen-text);
+  border-color: color-mix(in srgb, var(--zone-nitrogen-border) 55%, transparent);
+  background: color-mix(in srgb, var(--zone-nitrogen-bg) 45%, transparent);
+}
+
+.zone-label--benzene_ring,
+.zone-label--nitro_amine,
+.zone-label--phenol_chain,
+.zone-label--benzoate,
+.zone-label--azo_dyes {
+  color: var(--plum-mid);
+  border-color: color-mix(in srgb, var(--plum-soft) 55%, transparent);
+  background: color-mix(in srgb, var(--cream-muted) 45%, transparent);
+}
+
+.detail-panel {
+  position: absolute;
+  right: 0.75rem;
+  top: 0.75rem;
+  width: min(420px, calc(100% - 1.5rem));
+  max-height: calc(100% - 1.5rem);
+  overflow-y: auto;
+  padding: 1rem;
+  background: var(--cream);
+  border: 2px solid var(--pink-light);
+  border-radius: 8px;
+  box-shadow: 0 8px 32px rgba(111, 36, 81, 0.12);
+  font-size: 0.8rem;
+  line-height: 1.45;
+  z-index: 30;
+}
+
+.detail-panel.hidden {
+  display: none;
+}
+
+.detail-close {
+  position: absolute;
+  top: 0.35rem;
+  right: 0.5rem;
+  border: none;
+  background: none;
+  color: var(--plum-soft);
+  font-size: 1.25rem;
+  cursor: pointer;
+}
+
+.detail-close:hover {
+  color: var(--plum-deep);
+}
+
+.detail-panel h3 {
+  margin: 0 1.5rem 0.5rem 0;
+  font-size: 1rem;
+  color: var(--plum-deep);
+}
+
+.detail-panel .tag {
+  display: inline-block;
+  font-size: 0.68rem;
+  padding: 0.12rem 0.4rem;
+  border-radius: 4px;
+  background: var(--pink-pale);
+  color: var(--surface-plum);
+  border: 1px solid var(--pink-light);
+  margin: 0 0.3rem 0.3rem 0;
+}
+
+.detail-panel .tag:nth-child(2n) {
+  background: var(--highlight-blush);
+  border-color: var(--accent-strong);
+}
+
+.detail-panel dl {
+  margin: 0.5rem 0 0;
+}
+
+.detail-panel dt {
+  font-size: 0.68rem;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  color: var(--plum-soft);
+  margin-top: 0.5rem;
+}
+
+.detail-panel dd {
+  margin: 0.12rem 0 0;
+  color: var(--a2-deep);
+}
+
+.reaction-table {
+  width: 100%;
+  border-collapse: collapse;
+  margin: 0.5rem 0 0.85rem;
+  font-size: 0.78rem;
+  font-weight: 700;
+}
+
+.reaction-table th,
+.reaction-table td {
+  border: 1px solid var(--plum-soft);
+  padding: 0.4rem 0.55rem;
+  text-align: left;
+  vertical-align: top;
+}
+
+.reaction-table th {
+  width: 32%;
+  background: var(--table-head);
+  color: var(--cream);
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+  font-size: 0.68rem;
+}
+
+.reaction-table td {
+  background: var(--table-cell);
+  color: var(--plum-deep);
+  font-weight: 700;
+}
+
+.reaction-table--compact {
+  margin-top: 0.35rem;
+}
+
+.reaction-condition-list {
+  margin: 0;
+  padding-left: 1.15em;
+  list-style: disc;
+}
+
+.reaction-condition-list li + li {
+  margin-top: 0.2rem;
+}
+
+.detail-section {
+  margin: 1rem 0 0.35rem;
+  font-size: 0.72rem;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  color: var(--plum-mid);
+}
+
+.detail-hint {
+  margin: 0.65rem 0 0;
+  font-size: 0.72rem;
+  color: var(--plum-soft);
+  font-weight: 700;
+}
+
+.path-step-block {
+  margin-bottom: 0.75rem;
+}
+
+.path-step-title {
+  margin: 0 0 0.25rem;
+  font-size: 0.72rem;
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+  color: var(--surface-plum);
+}
+
+.path-chain {
+  margin: 0 0 0.75rem;
+  font-size: 1.6em;
+  font-weight: 700;
+  line-height: 1.35;
+  color: var(--plum-deep);
+  letter-spacing: 0.01em;
+}
+
+.detail-actions {
+  display: flex;
+  gap: 0.4rem;
+  flex-wrap: wrap;
+  margin-top: 0.5rem;
+}
+
+@media (max-width: 720px) {
+  .toolbar-brand h1 {
+    font-size: 0.9rem;
+  }
+
+  .toolbar-path select {
+    min-width: 7rem;
+    flex: 1;
+  }
+
+  .zoom-hint {
+    display: none;
+  }
+
+  .detail-panel {
+    left: 0.75rem;
+    right: 0.75rem;
+    width: auto;
+    max-height: 40%;
+    top: auto;
+    bottom: 0.75rem;
+  }
+}

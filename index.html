@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate" />
+    <title>WJEC Organic Pathways</title>
+    <link rel="stylesheet" href="css/styles.css?v=20260521i" />
+    <script src="https://unpkg.com/vis-network/standalone/umd/vis-network.min.js"></script>
+    <script type="module" src="js/app.js?v=20260521p"></script>
+  </head>
+  <body>
+    <div class="app">
+      <header class="toolbar">
+        <div class="toolbar-brand">
+          <h1>Organic Pathways — Aliphatic</h1>
+          <span class="badge">WJEC A2</span>
+        </div>
+
+        <div
+          class="pathway-switch"
+          role="tablist"
+          aria-label="Pathway type"
+        >
+          <button
+            type="button"
+            class="pathway-tab active"
+            data-pathway="aliphatic"
+            role="tab"
+            aria-selected="true"
+          >
+            Aliphatic
+          </button>
+          <button
+            type="button"
+            class="pathway-tab"
+            data-pathway="aromatic"
+            role="tab"
+            aria-selected="false"
+          >
+            Aromatic
+          </button>
+        </div>
+
+        <div class="toolbar-path" aria-label="Shortest path finder">
+          <select id="from-select" aria-label="From"></select>
+          <button type="button" id="swap-btn" class="btn-icon" title="Swap">⇅</button>
+          <select id="to-select" aria-label="To"></select>
+          <button type="button" id="find-btn" class="btn btn-primary">
+            Shortest path
+          </button>
+          <button type="button" id="clear-btn" class="btn btn-ghost">Clear</button>
+        </div>
+
+        <div class="toolbar-actions">
+          <button type="button" id="fit-btn" class="btn btn-ghost">Fit map</button>
+          <button type="button" id="zoom-in-btn" class="btn btn-ghost" title="Zoom in">+</button>
+          <button type="button" id="zoom-out-btn" class="btn btn-ghost" title="Zoom out">−</button>
+        </div>
+      </header>
+
+      <div id="path-banner" class="path-banner hidden" role="status">
+        <span id="path-status"></span>
+        <div id="path-routes" class="path-routes"></div>
+      </div>
+
+      <p class="zoom-hint">Click two compounds for shortest path · <strong>single-click</strong> an arrow to view that reaction · <strong>double-click</strong> a box to enlarge · empty space to reset · <span class="feedback-hint">If you find any issues, please email <a href="mailto:wangzijia311@gmail.com">wangzijia311@gmail.com</a>.</span></p>
+
+      <main class="map-stage">
+        <div id="zone-labels" class="zone-labels" aria-hidden="true"></div>
+        <div id="graph" class="graph" aria-label="Organic reaction mind map"></div>
+        <div id="node-labels" class="node-labels"></div>
+        <div id="aromatic-arrows" class="aromatic-arrows" aria-hidden="true"></div>
+        <aside id="detail-panel" class="detail-panel hidden" aria-live="polite">
+          <button type="button" id="detail-close" class="detail-close" aria-label="Close">×</button>
+          <div id="detail-content"></div>
+        </aside>
+      </main>
+
+      <div id="node-zoom-modal" class="node-zoom-modal hidden" aria-hidden="true">
+        <div class="node-zoom-backdrop" data-zoom-dismiss></div>
+        <div class="node-zoom-panel" role="dialog" aria-modal="true" aria-labelledby="node-zoom-title">
+          <button type="button" class="node-zoom-close" data-zoom-dismiss aria-label="Close">×</button>
+          <div id="node-zoom-content" class="node-zoom-content"></div>
+        </div>
+      </div>
+    </div>
+  </body>
+</html>
