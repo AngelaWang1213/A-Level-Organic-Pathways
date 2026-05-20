@@ -12,7 +12,7 @@ import {
   clampScale,
   recordFitScale,
   constrainView,
-} from "./graph.js?v=20260520v4";
+} from "./graph.js?v=20260520v5";
 import {
   mountNodeLabelOverlays,
   bindNodeLabelSync,
@@ -24,7 +24,7 @@ import {
   syncVisBoxesToLabels,
   setNodeZoomFocus,
   clearNodeZoomFocus,
-} from "./nodeLabels.js?v=20260520n";
+} from "./nodeLabels.js?v=20260520v5";
 import {
   bindAromaticArrowOverlay,
   unbindAromaticArrowOverlay,
@@ -487,7 +487,15 @@ function isBlankCanvasHit(params) {
   return true;
 }
 
+function pinchGestureActive() {
+  const n = state.network;
+  if (!n) return false;
+  if (n._pinchActive) return true;
+  return n._pinchEndAt && Date.now() - n._pinchEndAt < 500;
+}
+
 function handleCanvasBlankDoubleClick() {
+  if (pinchGestureActive()) return;
   lastBlankDoubleAt = Date.now();
   closeNodeZoomModal();
   clearHighlight();
@@ -648,11 +656,87 @@ function wireNetworkEvents() {
 }
 
 /** Backup: clear when clicking empty canvas (not on a node, edge, or label) */
+function wirePinchGuard() {
+  const stage = document.querySelector(".map-stage");
+  if (!stage || stage.dataset.pinchBound === "1") return;
+  stage.dataset.pinchBound = "1";
+
+  stage.addEventListener(
+    "touchstart",
+    (e) => {
+      if (e.touches.length >= 2 && state.network) {
+        state.network._pinchActive = true;
+        state.network._pinchEndAt = 0;
+      }
+    },
+    { passive: true }
+  );
+
+  stage.addEventListener(
+    "touchend",
+    (e) => {
+      if (e.touches.length === 0 && state.network?._pinchActive) {
+        state.network._pinchActive = false;
+        state.network._pinchEndAt = Date.now();
+      }
+    },
+    { passive: true }
+  );
+}
+
 function wireMapBackgroundClick() {
   const stage = document.querySelector(".map-stage");
   const graph = document.getElementById("graph");
   if (!stage || !graph || stage.dataset.bgClickBound === "1") return;
   stage.dataset.bgClickBound = "1";
+
+  let blankTap = { time: 0, x: 0, y: 0 };
+
+  const isBlankCanvasTouch = (clientX, clientY) => {
+    const canvas = graph.querySelector("canvas");
+    if (!canvas || !state.network) return false;
+    const rect = canvas.getBoundingClientRect();
+    if (
+      clientX < rect.left ||
+      clientX > rect.right ||
+      clientY < rect.top ||
+      clientY > rect.bottom
+    ) {
+      return false;
+    }
+    const dom = { x: clientX - rect.left, y: clientY - rect.top };
+    const canvasPos = state.network.DOMtoCanvas(dom);
+    if (state.network.getNodeAt(canvasPos)) return false;
+    if (typeof state.network.getEdgeAt === "function") {
+      if (state.network.getEdgeAt(canvasPos)) return false;
+    }
+    return true;
+  };
+
+  stage.addEventListener(
+    "touchend",
+    (e) => {
+      if (e.target.closest(".node-label")) return;
+      if (e.target.closest("#detail-panel")) return;
+      if (e.target.closest("#node-zoom-modal")) return;
+      if (pinchGestureActive()) return;
+      if (e.touches.length > 0) return;
+
+      const t = e.changedTouches[0];
+      if (!t || !isBlankCanvasTouch(t.clientX, t.clientY)) return;
+
+      const now = Date.now();
+      const dist = Math.hypot(t.clientX - blankTap.x, t.clientY - blankTap.y);
+      if (now - blankTap.time < 420 && dist < 32) {
+        e.preventDefault();
+        handleCanvasBlankDoubleClick();
+        blankTap = { time: 0, x: 0, y: 0 };
+        return;
+      }
+      blankTap = { time: now, x: t.clientX, y: t.clientY };
+    },
+    { passive: false }
+  );
 
   stage.addEventListener("click", (e) => {
     if (e.target.closest(".node-label")) return;
@@ -676,6 +760,7 @@ function wireMapBackgroundClick() {
   });
 
   stage.addEventListener("dblclick", (e) => {
+    if (pinchGestureActive()) return;
     if (e.target.closest(".node-label")) return;
     if (e.target.closest("#detail-panel")) return;
     if (e.target.closest("#node-zoom-modal")) return;
@@ -783,6 +868,7 @@ async function init() {
     wireToolbarEvents();
     wireZoomModal();
     wireViewportConstraints();
+    wirePinchGuard();
     await switchPathway("aliphatic");
   } catch (err) {
     const banner = document.getElementById("path-banner");

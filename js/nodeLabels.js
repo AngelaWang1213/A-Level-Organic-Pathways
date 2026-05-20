@@ -256,16 +256,32 @@ export function bindNodeLabelSync(network) {
   sync();
 }
 
-/** Single click = path pick; double click = zoom card (delegated — survives remount) */
+const TAP_DBL_MS = 420;
+const TAP_DBL_PX = 28;
+
+/** Single click = path pick; double click / double-tap = zoom card */
 export function bindNodeLabelClicks(onNodeClick, onNodeDblClick, onCancelPendingClick) {
   const overlay = document.getElementById("node-labels");
   if (!overlay || overlay.dataset.clickBound === "1") return;
   overlay.dataset.clickBound = "1";
 
+  let suppressClickUntil = 0;
+  let lastTap = { time: 0, id: null, x: 0, y: 0 };
+
+  const openZoom = (id, e) => {
+    e.stopPropagation();
+    e.preventDefault();
+    onCancelPendingClick?.();
+    suppressClickUntil = Date.now() + 500;
+    lastTap = { time: 0, id: null, x: 0, y: 0 };
+    if (id && onNodeDblClick) onNodeDblClick(id);
+  };
+
   overlay.addEventListener("click", (e) => {
     const label = e.target.closest(".node-label");
     if (!label) return;
     if (e.target.closest(".node-label-ext-link")) return;
+    if (Date.now() < suppressClickUntil) return;
 
     e.stopPropagation();
     const id = label.dataset.id;
@@ -278,12 +294,35 @@ export function bindNodeLabelClicks(onNodeClick, onNodeDblClick, onCancelPending
     const label = e.target.closest(".node-label");
     if (!label) return;
     if (e.target.closest(".node-label-ext-link")) return;
-
-    e.stopPropagation();
-    e.preventDefault();
-    onCancelPendingClick?.();
-
     const id = label.dataset.id;
-    if (id && onNodeDblClick) onNodeDblClick(id);
+    if (id) openZoom(id, e);
   });
+
+  overlay.addEventListener(
+    "touchend",
+    (e) => {
+      const label = e.target.closest(".node-label");
+      if (!label) return;
+      if (e.target.closest(".node-label-ext-link")) return;
+
+      const id = label.dataset.id;
+      if (!id || !e.changedTouches?.[0]) return;
+
+      const t = e.changedTouches[0];
+      const now = Date.now();
+      const dist = Math.hypot(t.clientX - lastTap.x, t.clientY - lastTap.y);
+
+      if (
+        lastTap.id === id &&
+        now - lastTap.time < TAP_DBL_MS &&
+        dist < TAP_DBL_PX
+      ) {
+        openZoom(id, e);
+        return;
+      }
+
+      lastTap = { time: now, id, x: t.clientX, y: t.clientY };
+    },
+    { passive: false }
+  );
 }

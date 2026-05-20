@@ -84,11 +84,11 @@ export const ZOOM_LIMITS = {
     panSlackRatio: 0.22,
   },
   mobile: {
-    minRatioOfFit: 0.45,
-    maxRatioOfFit: 1.75,
-    absoluteMin: 0.22,
-    absoluteMax: 1.9,
-    panSlackRatio: 0.12,
+    minRatioOfFit: 0.28,
+    maxRatioOfFit: 3.5,
+    absoluteMin: 0.08,
+    absoluteMax: 4,
+    panSlackRatio: 0.18,
   },
 };
 
@@ -148,13 +148,6 @@ export function recordFitScale(network) {
   const max = Math.min(limits.absoluteMax, fit * limits.maxRatioOfFit);
   network._zoomMin = min;
   network._zoomMax = max;
-  try {
-    network.setOptions({
-      interaction: { zoomMin: min, zoomMax: max },
-    });
-  } catch {
-    /* older vis builds may ignore zoomMin/zoomMax */
-  }
 }
 
 export function clampScale(network, scale) {
@@ -165,10 +158,16 @@ export function clampScale(network, scale) {
 }
 
 let _clampingView = false;
-let _panRaf = 0;
 
 export function constrainView(network) {
-  if (!network?.body?.data || _clampingView || !network._fitScale) return;
+  if (
+    !network?.body?.data ||
+    _clampingView ||
+    !network._fitScale ||
+    network._pinchActive
+  ) {
+    return;
+  }
 
   const bounds = getContentBounds(network);
   if (!bounds) return;
@@ -216,17 +215,17 @@ export function bindViewConstraints(network) {
   if (!network || network._viewBound) return;
   network._viewBound = true;
 
-  const scheduleConstrain = () => {
-    if (_panRaf) cancelAnimationFrame(_panRaf);
-    _panRaf = requestAnimationFrame(() => {
-      _panRaf = 0;
-      constrainView(network);
-    });
-  };
+  let zoomSettleTimer = 0;
 
-  network.on("zoom", scheduleConstrain);
-  network.on("dragging", scheduleConstrain);
-  network.on("dragEnd", () => constrainView(network));
+  network.on("zoom", () => {
+    if (network._pinchActive) return;
+    clearTimeout(zoomSettleTimer);
+    zoomSettleTimer = setTimeout(() => constrainView(network), 280);
+  });
+
+  network.on("dragEnd", () => {
+    setTimeout(() => constrainView(network), 80);
+  });
 }
 
 /** vis-network heightConstraint only supports minimum (not maximum). */
