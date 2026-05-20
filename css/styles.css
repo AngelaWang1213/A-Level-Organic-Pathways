@@ -700,25 +700,52 @@ div.vis-tooltip {
 }
 
 .node-zoom-card .node-label-structure-wrap {
-  width: 200px;
-  height: 200px;
-  overflow: hidden;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: auto;
+  max-width: min(280px, 80vw);
+  height: auto;
+  margin: 0.5em auto;
+  padding: 10px;
+  overflow: visible;
+  border: 1px solid rgba(158, 72, 114, 0.25);
+  border-radius: 8px;
+  background: #fff;
 }
 
 .node-zoom-card .node-label-structure {
-  width: 220px;
-  height: 220px;
-  margin: -10px;
-  transform: scale(1.4);
+  display: block;
+  width: auto;
+  height: auto;
+  max-width: min(260px, 75vw);
+  max-height: min(260px, 50vh);
+  margin: 0;
+  transform: none;
+  object-fit: contain;
+  object-position: center;
+  border: none;
+  border-radius: 0;
+}
+
+.node-zoom-card .node-label-structure-wrap--local .node-label-structure {
+  max-width: min(260px, 75vw);
+  max-height: min(260px, 50vh);
 }
 
 .node-zoom-card .node-label-structure-svg {
-  width: 200px;
-  height: 200px;
+  width: auto;
+  max-width: min(260px, 75vw);
+  height: auto;
+  max-height: min(260px, 50vh);
+  overflow: visible;
 }
 
 .node-zoom-card .node-label-structure-svg svg {
-  transform: scale(1.35);
+  width: 100%;
+  height: auto;
+  max-height: min(260px, 50vh);
+  transform: none;
 }
 
 .node-zoom-card .node-label-structure-links {
