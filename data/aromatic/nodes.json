@@ -11,6 +11,7 @@
       "label": "Benzene",
       "example": "benzene",
       "displayed_formula": "C₆H₆",
+      "structure_image": "images/structures/benzene.png",
       "tier": "A2"
     },
     {
@@ -68,6 +69,7 @@
       "label": "Sodium phenolate",
       "example": "sodium phenoxide",
       "displayed_formula": "C₆H₅—O⁻ Na⁺",
+      "structure_image": "images/structures/sodium_phenolate.png",
       "tier": "A2"
     },
     {
@@ -75,6 +77,7 @@
       "label": "Phenol",
       "example": "phenol",
       "displayed_formula": "C₆H₅—OH",
+      "structure_image": "images/structures/phenol.png",
       "tier": "A2"
     },
     {
@@ -98,6 +101,7 @@
       "label": "Sodium benzoate",
       "example": "sodium benzoate",
       "displayed_formula": "C₆H₅—COO⁻ Na⁺",
+      "structure_image": "images/structures/sodium_benzoate.png",
       "tier": "A2"
     },
     {
@@ -105,6 +109,7 @@
       "label": "Benzoic acid",
       "example": "benzoic acid",
       "displayed_formula": "C₆H₅—COOH",
+      "structure_image": "images/structures/benzoic_acid.png",
       "tier": "A2"
     },
     {
