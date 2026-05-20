@@ -12,7 +12,7 @@ import {
   clampScale,
   recordFitScale,
   constrainView,
-} from "./graph.js?v=20260520v2";
+} from "./graph.js?v=20260520v4";
 import {
   mountNodeLabelOverlays,
   bindNodeLabelSync,
@@ -463,9 +463,41 @@ function handleNodePick(nodeId) {
   runPathFind(start, end);
 }
 
+let lastBlankDoubleAt = 0;
+
 function handleCanvasBlankClick() {
+  if (Date.now() - lastBlankDoubleAt < 450) return;
   clearHighlight();
   document.getElementById("detail-panel").classList.add("hidden");
+}
+
+function isBlankCanvasHit(params) {
+  if (!state.network) return false;
+  const src = params.event?.srcEvent || params.event;
+  if (src?.target?.closest?.(".node-label")) return false;
+
+  const nodeId = getClickedNodeId(params);
+  if (nodeId) return false;
+  if (params.edges?.length) return false;
+
+  if (params.pointer?.DOM && typeof state.network.getEdgeAt === "function") {
+    const canvasPos = state.network.DOMtoCanvas(params.pointer.DOM);
+    if (state.network.getEdgeAt(canvasPos)) return false;
+  }
+  return true;
+}
+
+function handleCanvasBlankDoubleClick() {
+  lastBlankDoubleAt = Date.now();
+  closeNodeZoomModal();
+  clearHighlight();
+  document.getElementById("detail-panel").classList.add("hidden");
+  if (!state.network) return;
+  fitMindMap(state.network, true);
+  state.network.once("animationFinished", () => {
+    if (state.pathway === "aromatic") syncVisBoxesToLabels(state.network);
+    syncNodeLabelPositions(state.network);
+  });
 }
 
 function restoreHighlightAfterZoomClose() {
@@ -606,6 +638,11 @@ function wireNetworkEvents() {
     if (nodeId) {
       params.event?.preventDefault?.();
       openNodeZoomModal(nodeId);
+      return;
+    }
+    if (isBlankCanvasHit(params)) {
+      params.event?.preventDefault?.();
+      handleCanvasBlankDoubleClick();
     }
   });
 }
@@ -636,6 +673,28 @@ function wireMapBackgroundClick() {
     }
 
     handleCanvasBlankClick();
+  });
+
+  stage.addEventListener("dblclick", (e) => {
+    if (e.target.closest(".node-label")) return;
+    if (e.target.closest("#detail-panel")) return;
+    if (e.target.closest("#node-zoom-modal")) return;
+    const canvas = graph.querySelector("canvas");
+    if (!canvas || (e.target !== canvas && !canvas.contains(e.target))) return;
+    if (!state.network) return;
+
+    const rect = canvas.getBoundingClientRect();
+    const dom = { x: e.clientX - rect.left, y: e.clientY - rect.top };
+    const canvasPos = state.network.DOMtoCanvas(dom);
+
+    if (state.network.getNodeAt(canvasPos)) return;
+    if (typeof state.network.getEdgeAt === "function") {
+      const edgeAt = state.network.getEdgeAt(canvasPos);
+      if (edgeAt) return;
+    }
+
+    e.preventDefault();
+    handleCanvasBlankDoubleClick();
   });
 }
 
