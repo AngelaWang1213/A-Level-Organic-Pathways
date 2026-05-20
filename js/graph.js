@@ -84,7 +84,7 @@ export const ZOOM_LIMITS = {
     panSlackRatio: 0.22,
   },
   mobile: {
-    minRatioOfFit: 0.78,
+    minRatioOfFit: 0.6,
     maxRatioOfFit: 1.75,
     absoluteMin: 0.22,
     absoluteMax: 1.9,

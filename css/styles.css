@@ -299,10 +299,15 @@ body {
 
 .zoom-hint {
   margin: 0;
-  padding: 0.25rem 0.85rem;
+  padding: 0.35rem 0.85rem;
   font-size: 0.72rem;
+  line-height: 1.45;
   color: var(--plum-soft);
   background: var(--cream-muted);
+}
+
+.zoom-hint--mobile {
+  display: none;
 }
 
 .zoom-hint kbd {
@@ -1021,7 +1026,18 @@ div.vis-tooltip {
     flex: 1;
   }
 
-  .zoom-hint {
+  .zoom-hint--desktop {
+    display: none;
+  }
+
+  .zoom-hint--mobile {
+    display: block;
+    font-size: 0.68rem;
+    padding: 0.4rem 0.65rem;
+    line-height: 1.5;
+  }
+
+  .zoom-hint--mobile kbd {
     display: none;
   }
 
