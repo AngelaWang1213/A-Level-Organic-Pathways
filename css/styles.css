@@ -88,6 +88,16 @@ body {
   height: 100dvh;
 }
 
+/* Sticky header so toolbar stays clickable after pan/zoom */
+.app-chrome {
+  position: sticky;
+  top: 0;
+  z-index: 200;
+  flex-shrink: 0;
+  background: var(--cream);
+  box-shadow: 0 2px 10px rgba(111, 36, 81, 0.1);
+}
+
 .toolbar {
   display: flex;
   flex-wrap: wrap;
@@ -96,7 +106,6 @@ body {
   padding: 0.55rem 0.85rem;
   background: linear-gradient(90deg, var(--pink-pale) 0%, var(--highlight-blush) 50%, var(--cream-muted) 100%);
   border-bottom: 2px solid var(--pink-light);
-  z-index: 20;
 }
 
 .toolbar-brand {
@@ -231,7 +240,6 @@ body {
   background: var(--path-banner-bg);
   border-bottom: 2px solid var(--path-banner-border);
   font-size: 0.8rem;
-  z-index: 15;
 }
 
 .path-banner.hidden {
@@ -295,7 +303,15 @@ body {
   font-size: 0.72rem;
   color: var(--plum-soft);
   background: var(--cream-muted);
-  z-index: 10;
+}
+
+.zoom-hint kbd {
+  font-family: inherit;
+  font-size: 0.68rem;
+  padding: 0.1em 0.35em;
+  border-radius: 4px;
+  border: 1px solid var(--plum-soft);
+  background: var(--cream);
 }
 
 .map-stage {
@@ -303,6 +319,10 @@ body {
   flex: 1;
   min-height: 0;
   overflow: hidden;
+  contain: layout paint;
+  overscroll-behavior: contain;
+  isolation: isolate;
+  z-index: 1;
 }
 
 .graph {
@@ -335,6 +355,7 @@ div.vis-tooltip {
   pointer-events: none;
   z-index: 5;
   overflow: hidden;
+  clip-path: inset(0);
 }
 
 /* SVG overlay: lines + arrowheads (vis edges are invisible, click-only) */

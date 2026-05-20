@@ -9,7 +9,9 @@ import {
   resetHighlight,
   fitMindMap,
   refreshAromaticEdges,
-} from "./graph.js?v=20260521e";
+  clampScale,
+  recordFitScale,
+} from "./graph.js?v=20260521z";
 import {
   mountNodeLabelOverlays,
   bindNodeLabelSync,
@@ -36,7 +38,7 @@ import {
   renderPathStepTable,
 } from "./detail.js?v=20260521b";
 
-const DATA_BASE = "./data";
+const DATA_BASE = "../data";
 const DATA_CACHE = "20260521m";
 
 const PATHWAYS = {
@@ -613,8 +615,6 @@ function wireMapBackgroundClick() {
     if (e.target.closest(".node-label")) return;
     if (e.target.closest("#detail-panel")) return;
     if (e.target.closest("#node-zoom-modal")) return;
-    if (e.target.closest(".vis-navigation")) return;
-
     const canvas = graph.querySelector("canvas");
     if (!canvas || (e.target !== canvas && !canvas.contains(e.target))) return;
     if (!state.network) return;
@@ -656,14 +656,20 @@ function wireToolbarEvents() {
 
   document.getElementById("zoom-in-btn").addEventListener("click", () => {
     if (!state.network) return;
-    const scale = state.network.getScale();
-    state.network.moveTo({ scale: scale * 1.35, animation: true });
+    const scale = clampScale(state.network, state.network.getScale() * 1.25);
+    state.network.moveTo({ scale, animation: true });
   });
 
   document.getElementById("zoom-out-btn").addEventListener("click", () => {
     if (!state.network) return;
-    const scale = state.network.getScale();
-    state.network.moveTo({ scale: scale / 1.35, animation: true });
+    const scale = clampScale(state.network, state.network.getScale() / 1.25);
+    state.network.moveTo({ scale, animation: true });
+  });
+
+  document.addEventListener("keydown", (e) => {
+    if (e.key !== "Escape" || !state.network) return;
+    closeNodeZoomModal();
+    fitMindMap(state.network, true);
   });
 
   document.getElementById("detail-close").addEventListener("click", () => {

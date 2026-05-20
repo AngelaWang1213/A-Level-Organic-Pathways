@@ -74,8 +74,57 @@ const HIDDEN_LABEL_FONT = {
   face: "Courier New",
 };
 
+/** Zoom limits relative to last “Fit map” scale (prevents map shrinking to a dot). */
+export const ZOOM_LIMITS = {
+  minRatioOfFit: 0.5,
+  maxRatioOfFit: 2.5,
+  absoluteMin: 0.12,
+  absoluteMax: 3,
+};
+
 export function getNodeBoxSpec(showStructureImages) {
   return showStructureImages ? NODE_BOX_AROMATIC : NODE_BOX_ALIPHATIC;
+}
+
+export function recordFitScale(network) {
+  if (!network) return;
+  const fit = network.getScale() || 1;
+  network._fitScale = fit;
+  const min = Math.max(ZOOM_LIMITS.absoluteMin, fit * ZOOM_LIMITS.minRatioOfFit);
+  const max = Math.min(ZOOM_LIMITS.absoluteMax, fit * ZOOM_LIMITS.maxRatioOfFit);
+  network._zoomMin = min;
+  network._zoomMax = max;
+  try {
+    network.setOptions({
+      interaction: { zoomMin: min, zoomMax: max },
+    });
+  } catch {
+    /* older vis builds may ignore zoomMin/zoomMax */
+  }
+}
+
+export function clampScale(network, scale) {
+  const min = network?._zoomMin ?? ZOOM_LIMITS.absoluteMin;
+  const max = network?._zoomMax ?? ZOOM_LIMITS.absoluteMax;
+  return Math.min(max, Math.max(min, scale));
+}
+
+let _clampingZoom = false;
+
+export function bindZoomConstraints(network) {
+  if (!network || network._zoomBound) return;
+  network._zoomBound = true;
+
+  network.on("zoom", () => {
+    if (_clampingZoom) return;
+    const current = network.getScale();
+    const clamped = clampScale(network, current);
+    if (Math.abs(current - clamped) > 0.002) {
+      _clampingZoom = true;
+      network.moveTo({ scale: clamped, animation: false });
+      _clampingZoom = false;
+    }
+  });
 }
 
 /** vis-network heightConstraint only supports minimum (not maximum). */
@@ -285,7 +334,7 @@ export function createMindMapGraph(container, nodes, reactions, layout, graphOpt
     interaction: {
       hover: false,
       tooltipDelay: 999999,
-      navigationButtons: true,
+      navigationButtons: false,
       keyboard: { enabled: true },
       zoomView: true,
       dragView: true,
@@ -293,6 +342,8 @@ export function createMindMapGraph(container, nodes, reactions, layout, graphOpt
       hideEdgesOnDrag: false,
       multiselect: false,
       selectConnectedEdges: false,
+      zoomMin: ZOOM_LIMITS.absoluteMin,
+      zoomMax: ZOOM_LIMITS.absoluteMax,
     },
   };
 
@@ -308,6 +359,7 @@ export function createMindMapGraph(container, nodes, reactions, layout, graphOpt
   network._aromatic = aromatic;
   network._svgArrows = true;
   refreshAromaticEdges(network);
+  bindZoomConstraints(network);
   return network;
 }
 
@@ -394,6 +446,12 @@ export function fitMindMap(network, animation = true) {
   };
   if (network._aromatic) {
     opts.padding = 60;
+  }
+  const applyFitScale = () => recordFitScale(network);
+  if (animation) {
+    network.once("animationFinished", applyFitScale);
+  } else {
+    requestAnimationFrame(applyFitScale);
   }
   network.fit(opts);
 }
