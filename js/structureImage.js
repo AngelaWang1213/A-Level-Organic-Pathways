@@ -263,6 +263,6 @@ export async function hydrateStructureImage(wrap, compoundName) {
   img.remove();
   const miss = document.createElement("p");
   miss.className = "node-label-structure-missing";
-  miss.textContent = "No embedded image — open CAS or ChemSpider below";
-  wrap.insertBefore(miss, wrap.querySelector(".node-label-structure-links"));
+  miss.textContent = "No structure image available";
+  wrap.appendChild(miss);
 }

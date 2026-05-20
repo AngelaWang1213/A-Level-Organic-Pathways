@@ -21,7 +21,7 @@ import {
   syncVisBoxesToLabels,
   setNodeZoomFocus,
   clearNodeZoomFocus,
-} from "./nodeLabels.js?v=20260521g";
+} from "./nodeLabels.js?v=20260520n";
 import {
   bindAromaticArrowOverlay,
   unbindAromaticArrowOverlay,
@@ -29,7 +29,7 @@ import {
   setAromaticArrowHighlight,
   aromaticEdgeEndpointOffsetFromLabels,
 } from "./aromaticArrows.js?v=20260521h";
-import { hydrateStructureImage } from "./structureImage.js?v=20260521g";
+import { hydrateStructureImage } from "./structureImage.js?v=20260520n";
 import {
   renderReactionTable,
   renderNodeDetailPanel,

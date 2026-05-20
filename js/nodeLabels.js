@@ -1,12 +1,11 @@
 import { refreshAromaticEdges } from "./graph.js?v=20260521e";
 import {
   getStructureImageCandidates,
-  getStructureReferenceLinks,
   getCasRegistryNumber,
   resolveCompoundName,
   hydrateStructureImage,
   structureImageUrl,
-} from "./structureImage.js?v=20260521g";
+} from "./structureImage.js?v=20260520n";
 
 const IMAGE_SIZE = { map: 120, modal: 220 };
 
@@ -15,17 +14,6 @@ function escapeHtml(text) {
     .replace(/&/g, "&amp;")
     .replace(/</g, "&lt;")
     .replace(/>/g, "&gt;");
-}
-
-function buildStructureLinksHtml(compound) {
-  const links = getStructureReferenceLinks(compound);
-  return `<div class="node-label-structure-links">
-      <a class="node-label-ext-link" href="${escapeHtml(links.molview)}" target="_blank" rel="noopener noreferrer" title="Open in MolView">MolView</a>
-      <span class="node-label-ext-sep">·</span>
-      <a class="node-label-ext-link" href="${escapeHtml(links.cas)}" target="_blank" rel="noopener noreferrer" title="CAS Common Chemistry">CAS</a>
-      <span class="node-label-ext-sep">·</span>
-      <a class="node-label-ext-link" href="${escapeHtml(links.chemspider)}" target="_blank" rel="noopener noreferrer" title="ChemSpider">ChemSpider</a>
-    </div>`;
 }
 
 export function buildNodeCardHtml(n, opts = {}) {
@@ -67,7 +55,6 @@ export function buildNodeCardHtml(n, opts = {}) {
         referrerpolicy="no-referrer"
         ${localImg ? "" : "hidden"}
       />
-      ${buildStructureLinksHtml(compound)}
     </div>`;
     }
   }
