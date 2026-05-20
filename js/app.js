@@ -11,7 +11,7 @@ import {
   refreshAromaticEdges,
   clampScale,
   recordFitScale,
-} from "./graph.js?v=20260521z";
+} from "./graph.js?v=20260520fix";
 import {
   mountNodeLabelOverlays,
   bindNodeLabelSync,
@@ -38,7 +38,13 @@ import {
   renderPathStepTable,
 } from "./detail.js?v=20260521b";
 
-const DATA_BASE = "../data";
+/** Resolve data/ next to js/ (works for GitHub Pages root and local /web/). */
+const DATA_ROOT = new URL("../data/", import.meta.url);
+
+function dataFileUrl(pathway, filename) {
+  return new URL(`${pathway}/${filename}`, DATA_ROOT).href;
+}
+
 const DATA_CACHE = "20260521m";
 
 const PATHWAYS = {
@@ -100,15 +106,14 @@ function updatePathwayTabs(pathway) {
 }
 
 async function loadPathwayData(pathway) {
-  const base = `${DATA_BASE}/${pathway}`;
   const [nodesRes, reactionsRes, layoutRes] = await Promise.all([
-    fetch(`${base}/nodes.json?v=${DATA_CACHE}`),
-    fetch(`${base}/reactions.json?v=${DATA_CACHE}`),
-    fetch(`${base}/layout.json?v=${DATA_CACHE}`),
+    fetch(`${dataFileUrl(pathway, "nodes.json")}?v=${DATA_CACHE}`),
+    fetch(`${dataFileUrl(pathway, "reactions.json")}?v=${DATA_CACHE}`),
+    fetch(`${dataFileUrl(pathway, "layout.json")}?v=${DATA_CACHE}`),
   ]);
   if (!nodesRes.ok || !reactionsRes.ok) {
     throw new Error(
-      `Could not load ${pathway} data. Run: python3 -m http.server 8080 from the project folder.`
+      `Could not load ${pathway} data (${nodesRes.status}). Check your connection and refresh the page.`
     );
   }
   const nodesJson = await nodesRes.json();

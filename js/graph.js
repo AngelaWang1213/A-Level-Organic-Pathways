@@ -116,7 +116,7 @@ export function bindZoomConstraints(network) {
   network._zoomBound = true;
 
   network.on("zoom", () => {
-    if (_clampingZoom) return;
+    if (_clampingZoom || !network._fitScale) return;
     const current = network.getScale();
     const clamped = clampScale(network, current);
     if (Math.abs(current - clamped) > 0.002) {
@@ -342,8 +342,6 @@ export function createMindMapGraph(container, nodes, reactions, layout, graphOpt
       hideEdgesOnDrag: false,
       multiselect: false,
       selectConnectedEdges: false,
-      zoomMin: ZOOM_LIMITS.absoluteMin,
-      zoomMax: ZOOM_LIMITS.absoluteMax,
     },
   };
 
